@@ -30,7 +30,7 @@
 #define LED_TOGGLE() digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN))
 
 // HID Report Descriptor
-PROGMEM const char usbHidReportDescriptor[USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH] = {
+PROGMEM const char usbHidReportDescriptor[] = {
   HID_USAGE_PAGE_SENSOR,         // USAGE_PAGE (Sensor)
   HID_USAGE_SENSOR_TYPE_LIGHT_AMBIENTLIGHT, // USAGE (AmbientLight)
   HID_COLLECTION(Physical),
@@ -248,7 +248,7 @@ void setup() {
   LED_OFF();
 
   // Initialize light sensor
-  Wire.begin();
+  BH1750_WIRE_INSTANCE.begin();
   lightSensor.begin();
 
   // Initialize USB connection
