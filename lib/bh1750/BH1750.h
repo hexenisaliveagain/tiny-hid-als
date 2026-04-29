@@ -22,7 +22,15 @@
 #  include <WProgram.h>
 #endif
 
-#include "Wire.h"
+#if defined(ARDUINO_AVR_DIGISPARK)
+#  include <TinyWireM.h>
+#  define BH1750_WIRE_TYPE USI_TWI
+#  define BH1750_WIRE_INSTANCE TinyWireM
+#else
+#  include <Wire.h>
+#  define BH1750_WIRE_TYPE TwoWire
+#  define BH1750_WIRE_INSTANCE Wire
+#endif
 
 // Uncomment, to enable debug messages
 // #define BH1750_DEBUG
@@ -67,7 +75,7 @@ public:
 
   BH1750(byte addr = 0x23);
   bool begin(Mode mode = CONTINUOUS_HIGH_RES_MODE, byte addr = 0x23,
-             TwoWire* i2c = nullptr);
+             BH1750_WIRE_TYPE* i2c = 0);
   bool configure(Mode mode);
   bool setMTreg(byte MTreg);
   bool measurementReady(bool maxWait = false);
@@ -77,7 +85,7 @@ private:
   byte BH1750_I2CADDR;
   byte BH1750_MTreg = (byte)BH1750_DEFAULT_MTREG;
   Mode BH1750_MODE = UNCONFIGURED;
-  TwoWire* I2C;
+  BH1750_WIRE_TYPE* I2C;
   unsigned long lastReadTimestamp;
 };
 
