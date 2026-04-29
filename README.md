@@ -1,31 +1,40 @@
-# tiny-hid-als
-This project contains open-source firmware for an USB HID Ambient Light Sensor (ALS) implementation using Digispark Attiny85-based microcontroller development board and BH1750FVI I2C light sensor module.
+# tiny-hid-als (Arduino `.ino` edition)
 
-# Schematic
+This project provides firmware for a USB HID Ambient Light Sensor (ALS) using a Digispark ATtiny85-compatible board and a BH1750FVI I2C light sensor module.
+
+The firmware entrypoint is now a standard Arduino sketch: `tiny_hid_als.ino`.
+
+## Hardware
+
+- ATtiny85 (Digispark-compatible board)
+- BH1750/BH1750FVI light sensor module (I2C)
+
+## Schematic
 
 ![Digispark connected to BH1750](https://github.com/3cky/tiny-hid-als/raw/main/doc/tiny-hid-als.png)
 
-# OS support
+## OS support
 
-USB HID sensors framework is supported out of the box since Linux 3.7 and Windows 8. 
+USB HID sensors framework is supported out of the box since Linux 3.7 and Windows 8.
 
-# Compiling and installing
+## Arduino IDE setup
 
-First, please install [PlatformIO](http://platformio.org/) open source ecosystem for IoT development compatible with **Arduino** code and its command line tools (Windows, MacOs and Linux). Also, you may need to install [git](http://git-scm.com/) in your system. 
+1. Open `tiny_hid_als.ino` in the Arduino IDE.
+2. Select an ATtiny85/Digispark board profile.
+3. Ensure the core/toolchain you use supports:
+   - V-USB (`usbdrv`)
+   - AVR headers (`<util/delay.h>`)
+4. Build and upload the sketch to your board.
 
-Note: with `platformIO` you don't need the Arduino IDE and install libraries, this will do it for you.
+> Note: Digispark boards usually require plugging in/resetting at upload time.
 
-Clone the project:
-``` bash
-git clone https://github.com/3cky/tiny-hid-als && cd tiny-hid-als
-```
+## Project layout
 
-Compiling and installing:
-``` bash
-pio run --target upload
-```
-
-Note: you need connect your Digispark after each compiling for upload the new firmware or reset it. More info [here](http://digistump.com/wiki/digispark/tutorials/connectingpro).
+- `tiny_hid_als.ino` — main Arduino sketch.
+- `include/HidSensorSpec.h` — HID Sensor Class usage definitions/macros.
+- `lib/bh1750` — BH1750 light sensor driver.
+- `lib/vusb` — V-USB stack used for HID over USB.
 
 ## License
-This project is distributed with GPL license, see [LICENSE](https://github.com/3cky/tiny-hid-als/blob/main/LICENSE) file for more informations.
+
+This project is distributed under GPLv3. See `LICENSE` for details.
