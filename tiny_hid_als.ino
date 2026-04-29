@@ -16,19 +16,21 @@
 
 #include <util/delay.h>
 
-#include <Wire.h>
-
-#include <BH1750.h>
+#include "lib/bh1750/BH1750.h"
 #include <usbdrv.h>
 #include "include/HidSensorSpec.h"
 
+#ifndef LED_BUILTIN
+#define LED_BUILTIN 1
+#endif
+
 #define LED_OUT() pinMode(LED_BUILTIN, OUTPUT)
-#define LED_OFF() digitalWrite(LED_BUILTIN, 0)
-#define LED_ON() digitalWrite(LED_BUILTIN, 1)
+#define LED_OFF() digitalWrite(LED_BUILTIN, LOW)
+#define LED_ON() digitalWrite(LED_BUILTIN, HIGH)
 #define LED_TOGGLE() digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN))
 
 // HID Report Descriptor
-PROGMEM const uchar usbHidReportDescriptor[USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH] = {
+PROGMEM const char usbHidReportDescriptor[USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH] = {
   HID_USAGE_PAGE_SENSOR,         // USAGE_PAGE (Sensor)
   HID_USAGE_SENSOR_TYPE_LIGHT_AMBIENTLIGHT, // USAGE (AmbientLight)
   HID_COLLECTION(Physical),
