@@ -51,7 +51,7 @@ BH1750::BH1750(byte addr) {
 
   BH1750_I2CADDR = addr;
   // Allows user to change TwoWire instance
-  I2C = &Wire;
+  I2C = &BH1750_WIRE_INSTANCE;
 }
 
 /**
@@ -60,7 +60,7 @@ BH1750::BH1750(byte addr) {
  * @param addr Address of the sensor
  * @param i2c TwoWire instance connected to I2C bus
  */
-bool BH1750::begin(Mode mode, byte addr, TwoWire* i2c) {
+bool BH1750::begin(Mode mode, byte addr, BH1750_WIRE_TYPE* i2c) {
 
   // I2C is expected to be initialized outside this library
   // But, allows a different address and TwoWire instance to be used
